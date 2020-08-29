@@ -1,3 +1,5 @@
+using API.Helpers;
+using AutoMapper;
 using Core.Interfaces;
 using Infrastructure.Data;
 using Microsoft.AspNetCore.Builder;
@@ -23,6 +25,9 @@ namespace API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IProductRepository, ProductRepository>();
+            // Generic repository'nin service'e eklenmesi asagidaki gibi oluyor. Generic olmayani yukaridaki gibi
+            services.AddScoped(typeof(IGenericRepository<>), (typeof(GenericRepository<>)));
+            services.AddAutoMapper(typeof(MappingProfiles));
             services.AddControllers();
             services.AddDbContext<StoreContext>(x => x.UseSqlite(_config.GetConnectionString("DefaultConnection")));
 
@@ -36,10 +41,13 @@ namespace API
             {
                 app.UseDeveloperExceptionPage();
             }
-            // HTTP ye gelen talepler bununla https ' yonlendirilecek
+            // HTTP ye gelen talepler bununla https'e yonlendirilecek
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            // Asagidaki middleware sayesinde wwwroot klasorundeki statik resimlerin de gosterilmesini saglayabiliyoruz.
+            app.UseStaticFiles();
 
             app.UseAuthorization();
 
