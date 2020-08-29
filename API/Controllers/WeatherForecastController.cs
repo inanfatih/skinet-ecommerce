@@ -9,6 +9,7 @@ namespace API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [ApiExplorerSettings(IgnoreApi = true)] // Bu controller in swagger a eklenmemesini saglamis oluyoruz bununla.
     public class WeatherForecastController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
