@@ -31,6 +31,13 @@ namespace API
             // Asagidakinin yukaridaki AddControllers tan sonra gelmesi gerekiyor.
             services.AddApplicationServices(); // Bununla Extensions dosyasindaki ApplicationServicesExtensions i services a eklemis oluyoruz.
             services.AddSwaggerDocumentation();
+            services.AddCors(opt =>
+            {
+                opt.AddPolicy("CorsPolicy", policy =>
+                {
+                    policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200");
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,7 +58,7 @@ namespace API
 
             // Asagidaki middleware sayesinde wwwroot klasorundeki statik resimlerin de gosterilmesini saglayabiliyoruz.
             app.UseStaticFiles();
-
+            app.UseCors("CorsPolicy");
             app.UseAuthorization();
             // app.UseSwagger();
             // app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "SkiNet API v1"); });
