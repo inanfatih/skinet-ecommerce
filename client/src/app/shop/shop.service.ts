@@ -5,6 +5,7 @@ import { IBrand } from './../shared/models/brand';
 import { IType } from './../shared/models/productType';
 import { map } from 'rxjs/operators';
 import { ShopParams } from './../shared/models/shopParams';
+import { IProduct } from '../shared/models/product';
 
 // Service'lerde @Injectable var
 // Angular services are singleton. They are initialized when the application starts
@@ -48,6 +49,10 @@ export class ShopService {
           return response.body;
         })
       );
+  }
+
+  getProduct(id: number): any {
+    return this.http.get<IProduct>(this.baseUrl + 'products/' + id);
   }
 
   getBrands(): any {
