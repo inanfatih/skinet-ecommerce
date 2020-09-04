@@ -14,7 +14,7 @@ import { IPagination } from '../shared/models/pagination';
 export class ShopComponent implements OnInit {
   // Asagidaki static: true => bu input field'ini bir ngIf'e bagli olarak gosterip sakliyorsak static olmuyor.
   // Fakat, eger herhangi bir ngIf yoksa, static: true yapiyoruz. Yani statik oluyor
-  @ViewChild('search', { static: true }) searchTerm: ElementRef;
+  @ViewChild('search', { static: false }) searchTerm: ElementRef;
 
   products: IProduct[];
   brands: IBrand[];
