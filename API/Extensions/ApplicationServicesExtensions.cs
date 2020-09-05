@@ -12,6 +12,7 @@ namespace API.Extensions
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
             services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IBasketRepository, BasketRepository>();
             // Generic repository'nin service'e eklenmesi asagidaki gibi oluyor. Generic olmayani yukaridaki gibi
             services.AddScoped(typeof(IGenericRepository<>), (typeof(GenericRepository<>)));
 
