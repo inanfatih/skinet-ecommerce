@@ -1,3 +1,4 @@
+import { BasketService } from './basket/basket.service';
 import { Component, OnInit } from '@angular/core';
 
 // @Component is a decorator
@@ -9,9 +10,21 @@ import { Component, OnInit } from '@angular/core';
 export class AppComponent implements OnInit {
   title = 'SkiNet';
 
-  constructor() {}
+  constructor(private basketService: BasketService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const basketId = localStorage.getItem('basket_id');
+    if (basketId) {
+      this.basketService.getBasket(basketId).subscribe(
+        () => {
+          console.log('Initialized basket');
+        },
+        (error) => {
+          console.log('error', error);
+        }
+      );
+    }
+  }
 
   // Html'de variable'in bu sekilde kullanilmasina {{ title }} => interpolation deniyor
 }
