@@ -29,6 +29,7 @@ namespace API
             services.AddAutoMapper(typeof(MappingProfiles));
             services.AddControllers();
             services.AddDbContext<StoreContext>(x => x.UseSqlite(_config.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<AppIdentityDbContext>(x => { x.UseSqlite(_config.GetConnectionString("IdentityConnection")); });
             services.AddSingleton<IConnectionMultiplexer>(c =>
             {
                 var configuration = ConfigurationOptions.Parse(_config
@@ -37,6 +38,7 @@ namespace API
             });
             // Asagidakinin yukaridaki AddControllers tan sonra gelmesi gerekiyor.
             services.AddApplicationServices(); // Bununla Extensions dosyasindaki ApplicationServicesExtensions i services a eklemis oluyoruz.
+            services.AddIdentityServices(_config);
             services.AddSwaggerDocumentation();
             services.AddCors(opt =>
             {
@@ -66,6 +68,7 @@ namespace API
             // Asagidaki middleware sayesinde wwwroot klasorundeki statik resimlerin de gosterilmesini saglayabiliyoruz.
             app.UseStaticFiles();
             app.UseCors("CorsPolicy");
+            app.UseAuthentication();
             app.UseAuthorization();
             // app.UseSwagger();
             // app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "SkiNet API v1"); });
