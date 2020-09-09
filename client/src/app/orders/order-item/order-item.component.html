@@ -1,0 +1,23 @@
+<div class="container mt-2">
+  <div *ngIf="order === null">
+    <p>There are no items in your basket</p>
+  </div>
+
+  <div *ngIf="order">
+    <div class="pb-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 py-5 mb-1">
+            <app-basket-summary [isBasket]="false"> </app-basket-summary>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-6 offset-6">
+            <app-order-totals></app-order-totals>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
